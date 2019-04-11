@@ -15,7 +15,7 @@ import (
 
 	"github.com/libp2p/go-libp2p-crypto"
 
-	"github.com/libp2p/go-floodsub"
+	floodsub "github.com/libp2p/go-floodsub"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
@@ -101,7 +101,7 @@ func main() {
 	//
 	// Construct a floodsub instance for this host
 	//
-	fsub, err := floodsub.NewFloodSub(ctx, host)
+	fsub, err := floodsub.NewFloodSub(ctx, host, floodsub.WithMessageSigning(false))
 	if err != nil {
 		fmt.Println("Error (floodsub.NewFloodSub): %v", err)
 		panic(err)
@@ -152,7 +152,8 @@ func main() {
 				panic(err)
 			}
 
-			fmt.Printf("%s: %s\n", msg.GetFrom(), string(msg.GetData()))
+			//fmt.Printf("%s: %s\n", msg.GetFrom(), string(msg.GetData()))
+			fmt.Printf("%s\n", string(msg.GetData()))
 		}
 	}()
 

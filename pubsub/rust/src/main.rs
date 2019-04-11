@@ -60,7 +60,8 @@ fn main() {
         fn on_floodsub<TTopology>(&mut self, message: <libp2p::floodsub::Floodsub<TSubstream> as libp2p::core::swarm::NetworkBehaviour<TTopology>>::OutEvent)
         where TSubstream: libp2p::tokio_io::AsyncRead + libp2p::tokio_io::AsyncWrite
         {
-            println!("{:?}: {}", &message.source,String::from_utf8_lossy(&message.data));
+            //println!("{:?}: {}", &message.source,String::from_utf8_lossy(&message.data));
+            println!("Received: {}", String::from_utf8_lossy(&message.data));
         }
     }
 
