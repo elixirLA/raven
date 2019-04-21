@@ -11,7 +11,7 @@ Message broadcasting is implemented by libp2p floodsub.
 
 **Directory**:  `pubsub`
 
-**What it demonstrates**:  Two Go peers, one JS peer, and one Rust peer are all created and run a chat server using a shared PubSub topic.  Typing text in any peer sends it to all the other peers.
+**What it demonstrates**:  Three Go peers, one JS peer are all created and run a chat server using a shared PubSub topic.  Typing text in any peer sends it to all the other peers.
 
 **Quick test**:  `cd pubsub` and then run `./test/test.sh`.  Requires Terminator (eg, `sudo apt-get install terminator`).  The rest of this section describes how to test manually.
 
