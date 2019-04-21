@@ -4,7 +4,8 @@
 
 Anonymity is achieved by implementing Dandelion protocol on top of libp2p's pub/sub module, dandelion is a privacy preserving protocol to make message sender anonymous, it has 2 phases, the first phase is stem phase, where messages go through a psuedo-random path, the second phase is fluffing, when the message reaches the last node(randomly chosen), the message is diffused to its surrounding peers, so the third party observer cannot track back the node original node who send the message, because the message is relayed through an anonymous graph.
 Message broadcasting is implemented by libp2p floodsub. 
-**libp2p-pubsub-dandelion**: https://github.com/rairyx/go-libp2p-pubsub/tree/dandelion
+
+**Dandelion implementation on libp2p-pubsub **: https://github.com/rairyx/go-libp2p-pubsub/tree/dandelion
 
 
 ## Demo
