@@ -42,7 +42,7 @@
       type = HPaned
     [[[terminal3]]]
       profile = default
-      command = 'pushd .. ; ./pubsub-interop -b ../util/private_key.bin.bootstrapper.Wa; popd ; bash'
+      command = 'pushd .. ; ./pubsub-interop ../util/private_key.bin.bootstrapper.Wa --bootstrapper; popd ; bash'
       order = 0
       parent = child2
       type = Terminal
@@ -63,7 +63,7 @@
       uuid = 8358280f-49da-4a74-bb27-7a3c7e472fe9
     [[[terminal7]]]
       profile = default
-      command = 'sleep 1 ; pushd ../rust ; cargo run; popd ; bash'
+      command = 'sleep 1 ; pushd .. ; ./pubsub-interop ../util/private_key.bin.peer.vy; popd ; bash'
       order = 1
       parent = child5
       type = Terminal
@@ -71,4 +71,5 @@
 [plugins]
 [profiles]
   [[default]]
+    font = Monospace 19 
     cursor_color = "#aaaaaa"

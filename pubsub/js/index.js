@@ -60,10 +60,8 @@ waterfall([
   },
   (cb) => {
     fsub.on(topicName, (data) => {
-      const peerIdStr = data.from
-      const peerIdTruncdStr = peerIdStr.substr(0,2) + "*" + peerIdStr.substr(peerIdStr.length-6,6)
       const messageStr = data.data
-      console.log("<peer " + peerIdTruncdStr + ">: " + messageStr)
+      console.log("received:" + messageStr)
     })
     fsub.subscribe(topicName)
 
