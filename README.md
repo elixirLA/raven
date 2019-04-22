@@ -16,7 +16,6 @@ Message broadcasting is implemented by libp2p floodsub.
 
 **Quick test**:  `cd pubsub` and then run `./test/test.sh`.  Requires Terminator (eg, `sudo apt-get install terminator`).  The rest of this section describes how to test manually.
 
-(**TODO**:  maybe eliminate centralized bootstrapper; any peer could then bootstrap from any other peer and peers could start in any order; downside is the code will be more complex in all peers)
 
 **First terminal**:  Create the bootstrapper node
 
