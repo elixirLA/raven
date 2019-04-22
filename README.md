@@ -1,6 +1,6 @@
 # Raven
 
-## Decentralized messaging network that anyone can broadcast messages anonymously. 
+## Anonymous decentralized messaging network based on libp2p and dandelion. 
 
 Anonymity is achieved by implementing Dandelion protocol on top of libp2p's pub/sub module, dandelion is a privacy preserving protocol to make message sender anonymous, it has 2 phases, the first phase is stem phase, where messages go through a psuedo-random path, the second phase is fluffing, at a random time of the stem phase, the message is diffused to its surrounding peers, so the third party observer cannot track back the node original node who send the message, because the message is relayed through an anonymous graph.
 Message broadcasting is implemented by libp2p floodsub. 
