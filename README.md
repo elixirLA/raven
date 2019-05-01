@@ -22,7 +22,7 @@ Anonymity is achieved by implementing Dandelion protocol on top of libp2p's pub/
 
 ```
 cd pubsub
-./pubsub-interop ../util/private_key.bin.bootstrapper.Wa --bootstrapper
+./raven ../util/private_key.bin.bootstrapper.Wa --bootstrapper
 ```
 
 The bootstrapper creates a new libp2p node, subscribes to the shared topic string, spawns a go routine to emit any publishes to that topic, and then waits forever.
@@ -33,7 +33,7 @@ The bootstrapper creates a new libp2p node, subscribes to the shared topic strin
 
 ```
 cd pubsub
-./pubsub-interop ../util/private_key.bin.peer.Sk
+./raven ../util/private_key.bin.peer.Sk
 ```
 
 This peer, which is not in bootstrapper mode, creates a node, subscribes to the shared topic string, spawns the same go routine, and then loops forever requesting user input and publishing each line to the topic.
@@ -42,7 +42,7 @@ This peer, which is not in bootstrapper mode, creates a node, subscribes to the 
 
 ```
 cd pubsub
-./pubsub-interop ../util/private_key.bin.peer.vy
+./raven ../util/private_key.bin.peer.vy
 ```
 
 
