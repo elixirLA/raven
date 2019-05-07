@@ -1,4 +1,4 @@
-SRC		= pubsub-interop.go
+SRC		= raven.go
 BIN		= $(SRC:.go=)
 DHT_SERVER 	= libp2p-bootstrap.goelzer.io
 
