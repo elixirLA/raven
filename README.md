@@ -42,7 +42,7 @@ This peer, which is not in bootstrapper mode, creates a node, subscribes to the 
 
 ```
 cd pubsub
-./raven ../util/private_key.bin.peer.vy
+./raven ../util/private_key.bin.peer.W6 6001
 ```
 
 
