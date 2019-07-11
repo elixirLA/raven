@@ -9,23 +9,21 @@ import (
 	_ "time"
         "strconv"
 	"github.com/ipfs/go-log"
-	libp2p "github.com/libp2p/go-libp2p"
-	host "github.com/libp2p/go-libp2p-host"
+	"github.com/libp2p/go-libp2p"
+        host "github.com/libp2p/go-libp2p-core/host"
 	inet "github.com/libp2p/go-libp2p-net"
 	peerstore "github.com/libp2p/go-libp2p-peerstore"
 	libp2pdht "github.com/libp2p/go-libp2p-kad-dht"
 	"github.com/libp2p/go-libp2p-crypto"
 
 	logging "github.com/whyrusleeping/go-logging"
-	floodsub "github.com/libp2p/go-floodsub"
+	floodsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
 var logger = log.Logger("raven")
 var ho host.Host
 
-//var TopicName string = "libp2p-demo-chat"
-//h("libp2p-demo-chat") = "RDEpsjSPrAZF9JCK5REt3tao" - rust uses the hash unlike js/go ()
 var TopicName string = "RDEpsjSPrAZF9JCK5REt3tao"
 
 func parseArgs() (bool, string, int) {
@@ -56,7 +54,7 @@ func handleConn(conn inet.Conn) {
 }
 
 func main() {
-	log.SetAllLoggers(logging.INFO)
+	log.SetAllLoggers(logging.DEBUG)
 	log.SetLogLevel("raven", "debug")
 	ctx := context.Background()
 
