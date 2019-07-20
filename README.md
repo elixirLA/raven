@@ -42,22 +42,18 @@ This peer, which is not in bootstrapper mode, creates a node, subscribes to the 
 
 ```
 cd pubsub
-./raven ../util/private_key.bin.peer.W6 6001
+./raven ../util/private_key.bin.peer.w6 6001
 ```
 
 
 
-**Fourth terminal**:  Create a JS peer to connect to bootstrap and publish on topic
+**Fourth terminal**:  Create a third go peer to connect to bootstrap and publish on topic
 
 ```
-cd pubsub/js
-npm install  # first time only
-node index.js /ip4/127.0.0.1/tcp/5555/ipfs/QmehVYruznbyDZuHBV4vEHESpDevMoAovET6aJ9oRuEzWa
+cd pubsub
+./raven ../util/private_key.bin.peer.d9 6002
+
 ```
-
-This JS peer will accept lines of text typed on stdin, and publish them on the PubSub topic.
-
-(Note that the JS peer generates a new identity (public/private keypair) each time, and prints its public key to stdout.  This is a deficiency in the demo; to be consistent with the Go code it should accept a private key on the CLI.)
 
 
 If you return to the second, third or fourth terminals and type a message, the bootstrapper and the other 2 peers will all print your message.
