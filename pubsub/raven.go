@@ -17,7 +17,7 @@ import (
 	"github.com/libp2p/go-libp2p-crypto"
 
 	logging "github.com/whyrusleeping/go-logging"
-	floodsub "github.com/libp2p/go-libp2p-pubsub"
+	gossipsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
@@ -45,13 +45,6 @@ func parseArgs() (bool, string, int) {
 	return bBootstrap, privKeyFilePath, listenPort
 }
 
-func handleConn(conn inet.Conn) {
-	ctx := context.Background()
-	h := ho
-	fmt.Printf("<NOTICE> New peer joined: %v\n", conn.RemoteMultiaddr().String())
-	_ = h
-	_ = ctx
-}
 
 func main() {
 	log.SetAllLoggers(logging.DEBUG)
@@ -118,8 +111,8 @@ func main() {
 	if err = kademliaDHT.Bootstrap(ctx); err != nil {
 			panic(err)
 	}
-	// Construct a floodsub instance for this host
-	fsub, err := floodsub.NewFloodSub(ctx, host, floodsub.WithMessageSigning(false))
+	// Construct a gossipsub instance for this host
+	gsub, err := gossipsub.NewGossipSub(ctx, host, gossipsub.WithMessageSigning(false))
 	if err != nil {
 		fmt.Println("Error (floodsub.NewFloodSub): %v", err)
 		panic(err)
@@ -154,7 +147,7 @@ func main() {
 	//
 	// Subscribe to the topic and wait for messages published on that topic
 	//
-	sub, err := fsub.Subscribe(TopicName)
+	sub, err := gsub.Subscribe(TopicName)
 	if err != nil {
 		fmt.Println("Error (fsub.Subscribe): %v", err)
 		panic(err)
@@ -190,7 +183,7 @@ func main() {
 		// Now, wait for input from the user, and send that out!
 		scan := bufio.NewScanner(os.Stdin)
 		for scan.Scan() {
-			if err := fsub.Publish(TopicName, scan.Bytes()); err != nil {
+			if err := gsub.Publish(TopicName, scan.Bytes()); err != nil {
 				panic(err)
 			}
 		}
