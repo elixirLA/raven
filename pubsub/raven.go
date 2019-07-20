@@ -114,7 +114,7 @@ func main() {
 	// Construct a gossipsub instance for this host
 	gsub, err := gossipsub.NewGossipSub(ctx, host, gossipsub.WithMessageSigning(false))
 	if err != nil {
-		fmt.Println("Error (floodsub.NewFloodSub): %v", err)
+		fmt.Println("Error (gossipsub.NewGossipSub): %v", err)
 		panic(err)
 	}
 	const bootstrapAddrIP4Str string = "127.0.0.1"
@@ -176,7 +176,7 @@ func main() {
 		},
 	})
 	if bBootstrap {
-		fmt.Println("Bootstrapper running.\nPubSub object instantiated using FloodSubRouter.\nCtrl+C to exit.")
+		fmt.Println("Bootstrapper running.\nPubSub object instantiated using GossipSubRouter.\nCtrl+C to exit.")
 		for true {
 		}
 	} else {
