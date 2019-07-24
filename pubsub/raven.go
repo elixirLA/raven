@@ -177,8 +177,9 @@ func main() {
 	})
 	if bBootstrap {
 		fmt.Println("Bootstrapper running.\nPubSub object instantiated using GossipSubRouter.\nCtrl+C to exit.")
-		for true {
-		}
+	//	for true {
+	//	}
+		select {}
 	} else {
 		// Now, wait for input from the user, and send that out!
 		scan := bufio.NewScanner(os.Stdin)
