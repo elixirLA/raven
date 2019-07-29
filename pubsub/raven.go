@@ -15,7 +15,6 @@ import (
 	peerstore "github.com/libp2p/go-libp2p-peerstore"
 	libp2pdht "github.com/libp2p/go-libp2p-kad-dht"
 	"github.com/libp2p/go-libp2p-crypto"
-
 	logging "github.com/whyrusleeping/go-logging"
 	gossipsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
@@ -25,6 +24,12 @@ var logger = log.Logger("raven")
 var ho host.Host
 
 var TopicName string = "RDEpsjSPrAZF9JCK5REt3tao"
+
+
+
+func init() {
+	         os.Setenv("GODEBUG", os.Getenv("GODEBUG")+",tls13=1")
+}
 
 func parseArgs() (bool, string, int) {
 	usage := fmt.Sprintf("Usage: %s PRIVATE_KEY  PORT [--bootstrapper] \n\nPRIVATE_KEY is the path to a private key like '../util/private_key.bin'\n PORT is port to listen on, default is 6000\n--bootstrapper to run in bootstrap mode (creates a DHT and listens for peers)\n", os.Args[0])
