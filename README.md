@@ -4,9 +4,9 @@
 
 Blockchain has enabled decentralized value transfer. A bigger future is decentralized communication. One step forward is anonymous decentralized communication which provides a censorship resistence privacy preserved communication network that anyone can send/receive, broadcast messages anonymously without revealing message metadata(sender, receiver, who send to whom, etc). It will find broad use cases, e.g., whistleblowing, anonymous public channel, incident reporting, privacy served messaging in Dapps etc.
 
-Anonymity is achieved by implementing Dandelion protocol on top of libp2p's pub/sub module, dandelion is a privacy preserving protocol to make message sender anonymous, it has 2 phases, the first phase is stem phase, where messages go through a psuedo-random path, the second phase is fluffing, at a random time of the stem phase, the message is diffused to its surrounding peers, so the third party observer cannot track back the node original node who send the message, because the message is relayed through an anonymous graph. Message broadcasting is implemented by libp2p floodsub. 
+Anonymity is achieved by implementing Dandelion++ protocol on top of libp2p's pub/sub module, Dandelion is a privacy preserving protocol to make message sender anonymous, it has 2 phases, the first phase is stem phase, where messages go through a psuedo-random path, the second phase is fluffing, at a random time of the stem phase, the message is diffused to its surrounding peers, so the third party observer cannot track back the node original node who send the message, because the message is relayed through an anonymous graph. Message broadcasting is implemented by libp2p floodsub. Dandelion++ is an improved version of Dandelion.
 
-**Dandelion implementation on libp2p-pubsub**: https://github.com/rairyx/go-libp2p-pubsub/tree/dandelion
+**Dandelion++ implementation on libp2p-pubsub**: https://github.com/rairyx/go-libp2p-pubsub/tree/dandelion++
 
 
 ## Demo
