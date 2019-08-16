@@ -4,9 +4,9 @@
 
 Blockchain has enabled decentralized value transfer. A bigger future is decentralized communication. One step forward is anonymous decentralized communication which provides a censorship resistence privacy preserved communication network that anyone can send/receive, broadcast messages anonymously without revealing message metadata(sender, receiver, who send to whom, etc). It will find broad use cases, e.g., whistleblowing, anonymous group chat, anonymous survey, privacy preserved messaging in Dapps etc.
 
-Anonymity is achieved by implementing Dandelion protocol on top of libp2p's pub/sub module, dandelion is a privacy preserving protocol to make message sender anonymous, it has 2 phases, the first phase is stem phase, where messages go through a psuedo-random path, the second phase is fluffing, at a random time of the stem phase, the message is diffused to its surrounding peers, so the third party observer cannot track back the node original node who send the message, because the message is relayed through an anonymous graph. Message broadcasting is implemented by libp2p floodsub. 
+Anonymity is achieved by implementing Dandelion++ protocol on top of libp2p's pub/sub module, Dandelion is a privacy preserving protocol to make message sender anonymous, it has 2 phases, the first phase is stem phase, where messages go through a psuedo-random path, the second phase is fluffing, at a random time of the stem phase, the message is diffused to its surrounding peers, so the third party observer cannot track back the node original node who send the message, because the message is relayed through an anonymous graph. Message broadcasting is implemented by libp2p floodsub. Dandelion++ is an improved version of Dandelion.
 
-**Dandelion implementation on libp2p-pubsub**: https://github.com/rairyx/go-libp2p-pubsub/tree/dandelion
+**Dandelion++ implementation on libp2p-pubsub**: https://github.com/rairyx/go-libp2p-pubsub/tree/dandelion++
 
 
 ## Demo
@@ -42,22 +42,18 @@ This peer, which is not in bootstrapper mode, creates a node, subscribes to the 
 
 ```
 cd pubsub
-./raven ../util/private_key.bin.peer.W6 6001
+./raven ../util/private_key.bin.peer.w6 6001
 ```
 
 
 
-**Fourth terminal**:  Create a JS peer to connect to bootstrap and publish on topic
+**Fourth terminal**:  Create a third go peer to connect to bootstrap and publish on topic
 
 ```
-cd pubsub/js
-npm install  # first time only
-node index.js /ip4/127.0.0.1/tcp/5555/ipfs/QmehVYruznbyDZuHBV4vEHESpDevMoAovET6aJ9oRuEzWa
+cd pubsub
+./raven ../util/private_key.bin.peer.d9 6002
+
 ```
-
-This JS peer will accept lines of text typed on stdin, and publish them on the PubSub topic.
-
-(Note that the JS peer generates a new identity (public/private keypair) each time, and prints its public key to stdout.  This is a deficiency in the demo; to be consistent with the Go code it should accept a private key on the CLI.)
 
 
 If you return to the second, third or fourth terminals and type a message, the bootstrapper and the other 2 peers will all print your message.

@@ -7,26 +7,31 @@ import (
 	"io/ioutil"
 	"os"
 	_ "time"
-
-	libp2p "github.com/libp2p/go-libp2p"
-	host "github.com/libp2p/go-libp2p-host"
+        "strconv"
+	"github.com/ipfs/go-log"
+	"github.com/libp2p/go-libp2p"
+        host "github.com/libp2p/go-libp2p-core/host"
 	inet "github.com/libp2p/go-libp2p-net"
 	peerstore "github.com/libp2p/go-libp2p-peerstore"
 
 	"github.com/libp2p/go-libp2p-crypto"
-
-	floodsub "github.com/libp2p/go-floodsub"
+	logging "github.com/whyrusleeping/go-logging"
+	gossipsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
 var ho host.Host
 
-//var TopicName string = "libp2p-demo-chat"
-//h("libp2p-demo-chat") = "RDEpsjSPrAZF9JCK5REt3tao" - rust uses the hash unlike js/go ()
 var TopicName string = "RDEpsjSPrAZF9JCK5REt3tao"
 
-func parseArgs() (bool, string) {
-	usage := fmt.Sprintf("Usage: %s PRIVATE_KEY [--bootstrapper]\n\nPRIVATE_KEY is the path to a private key like '../util/private_key.bin'\n--bootstrapper to run in bootstrap mode (creates a DHT and listens for peers)\n", os.Args[0])
+
+
+func init() {
+	         os.Setenv("GODEBUG", os.Getenv("GODEBUG")+",tls13=1")
+}
+
+func parseArgs() (bool, string, int) {
+	usage := fmt.Sprintf("Usage: %s PRIVATE_KEY  PORT [--bootstrapper] \n\nPRIVATE_KEY is the path to a private key like '../util/private_key.bin'\n PORT is port to listen on, default is 6000\n--bootstrapper to run in bootstrap mode (creates a DHT and listens for peers)\n", os.Args[0])
 	var bBootstrap bool = false
 	var privKeyFilePath string
 	var args []string = os.Args[1:]
@@ -41,15 +46,9 @@ func parseArgs() (bool, string) {
 	return bBootstrap, privKeyFilePath
 }
 
-func handleConn(conn inet.Conn) {
-	ctx := context.Background()
-	h := ho
-	fmt.Printf("<NOTICE> New peer joined: %v\n", conn.RemoteMultiaddr().String())
-	_ = h
-	_ = ctx
-}
-
 func main() {
+	log.SetAllLoggers(logging.DEBUG)
+	log.SetLogLevel("raven", "debug")
 	ctx := context.Background()
 
 	bBootstrap, privKeyFilePath := parseArgs()
@@ -98,12 +97,16 @@ func main() {
 		panic(err)
 	}
 
-	//
-	// Construct a floodsub instance for this host
-	//
-	fsub, err := floodsub.NewFloodSub(ctx, host, floodsub.WithMessageSigning(false))
+	// Bootstrap the DHT. In the default configuration, this spawns a Background
+	// thread that will refresh the peer table every five minutes.
+	logger.Debug("Bootstrapping the DHT")
+	if err = kademliaDHT.Bootstrap(ctx); err != nil {
+			panic(err)
+	}
+	// Construct a gossipsub instance for this host
+	gsub, err := gossipsub.NewGossipSub(ctx, host, gossipsub.WithMessageSigning(false))
 	if err != nil {
-		fmt.Println("Error (floodsub.NewFloodSub): %v", err)
+		fmt.Println("Error (gossipsub.NewGossipSub): %v", err)
 		panic(err)
 	}
 
@@ -137,7 +140,7 @@ func main() {
 	//
 	// Subscribe to the topic and wait for messages published on that topic
 	//
-	sub, err := fsub.Subscribe(TopicName)
+	sub, err := gsub.Subscribe(TopicName)
 	if err != nil {
 		fmt.Println("Error (fsub.Subscribe): %v", err)
 		panic(err)
@@ -166,14 +169,13 @@ func main() {
 		},
 	})
 	if bBootstrap {
-		fmt.Println("Bootstrapper running.\nPubSub object instantiated using FloodSubRouter.\nCtrl+C to exit.")
-		for true {
-		}
+		fmt.Println("Bootstrapper running.\nPubSub object instantiated using GossipSubRouter.\nCtrl+C to exit.")
+		select {}
 	} else {
 		// Now, wait for input from the user, and send that out!
 		scan := bufio.NewScanner(os.Stdin)
 		for scan.Scan() {
-			if err := fsub.Publish(TopicName, scan.Bytes()); err != nil {
+			if err := gsub.Publish(TopicName, scan.Bytes()); err != nil {
 				panic(err)
 			}
 		}
