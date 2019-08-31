@@ -15,7 +15,7 @@ import (
 	peerstore "github.com/libp2p/go-libp2p-peerstore"
 	libp2pdht "github.com/libp2p/go-libp2p-kad-dht"
 	"github.com/libp2p/go-libp2p-crypto"
-	logging "github.com/whyrusleeping/go-logging"
+	//logging "github.com/whyrusleeping/go-logging"
 	gossipsub "github.com/libp2p/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
 )
@@ -52,8 +52,6 @@ func parseArgs() (bool, string, int) {
 
 
 func main() {
-	log.SetAllLoggers(logging.DEBUG)
-	log.SetLogLevel("raven", "debug")
 	ctx := context.Background()
 
 	bBootstrap, privKeyFilePath, port := parseArgs()
