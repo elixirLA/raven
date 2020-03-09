@@ -13,13 +13,13 @@ import (
         host "github.com/libp2p/go-libp2p-core/host"
 	inet "github.com/libp2p/go-libp2p-net"
 	peerstore "github.com/libp2p/go-libp2p-peerstore"
-
+        libp2pdht "github.com/libp2p/go-libp2p-kad-dht"
 	"github.com/libp2p/go-libp2p-crypto"
-	logging "github.com/whyrusleeping/go-logging"
-	gossipsub "github.com/libp2p/go-libp2p-pubsub"
+	gossipsub "github.com/rairyx/go-libp2p-pubsub"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
+var logger = log.Logger("raven")
 var ho host.Host
 
 var TopicName string = "RDEpsjSPrAZF9JCK5REt3tao"
@@ -34,6 +34,7 @@ func parseArgs() (bool, string, int) {
 	usage := fmt.Sprintf("Usage: %s PRIVATE_KEY  PORT [--bootstrapper] \n\nPRIVATE_KEY is the path to a private key like '../util/private_key.bin'\n PORT is port to listen on, default is 6000\n--bootstrapper to run in bootstrap mode (creates a DHT and listens for peers)\n", os.Args[0])
 	var bBootstrap bool = false
 	var privKeyFilePath string
+	var listenPort = 6000
 	var args []string = os.Args[1:]
 	if (len(args) == 0) || (len(args) > 2) {
 		fmt.Printf("Error: wrong number of arguments\n\n%s", usage)
@@ -42,21 +43,21 @@ func parseArgs() (bool, string, int) {
 	privKeyFilePath = args[0]
 	if (len(args) == 2) && (args[1] == "--bootstrapper") {
 		bBootstrap = true
+	}else if (len(args) == 2) {
+		listenPort, _ = strconv.Atoi(args[1])
 	}
-	return bBootstrap, privKeyFilePath
+	return bBootstrap, privKeyFilePath, listenPort
 }
 
 func main() {
-	log.SetAllLoggers(logging.DEBUG)
-	log.SetLogLevel("raven", "debug")
 	ctx := context.Background()
 
-	bBootstrap, privKeyFilePath := parseArgs()
+	bBootstrap, privKeyFilePath, port := parseArgs()
 	fmt.Printf("Starting up in ")
 	if bBootstrap {
 		fmt.Printf("bootstrapper mode (port 5555)")
 	} else {
-		fmt.Printf("peer mode (port 6000)")
+		fmt.Printf("peer mode : %d", port)
 	}
 	fmt.Printf("\nPrivate key '%s'\n", privKeyFilePath)
 
@@ -97,6 +98,11 @@ func main() {
 		panic(err)
 	}
 
+	logger.Info("Host created. We are:", host.ID())
+	kademliaDHT, err := libp2pdht.New(ctx, host)
+	if err != nil {
+		panic(err)
+	}
 	// Bootstrap the DHT. In the default configuration, this spawns a Background
 	// thread that will refresh the peer table every five minutes.
 	logger.Debug("Bootstrapping the DHT")

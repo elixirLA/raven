@@ -1,12 +1,15 @@
 # Raven
 
 ## Anonymous decentralized messaging network 
+Blockchain has enabled decentralized value transfer. A bigger future is decentralized messaging. One unresolved area is anonymous message broadcasting which provides metadata privacy(who is sender, who is receiver, who send to whom, IP address, location, et cetera).
 
-Blockchain has enabled decentralized value transfer. A bigger future is decentralized communication. One step forward is anonymous decentralized communication which provides a censorship resistence privacy preserved communication network that anyone can send/receive, broadcast messages anonymously without revealing message metadata(sender, receiver, who send to whom, etc). It will find broad use cases, e.g., whistleblowing, anonymous group chat, anonymous survey, privacy preserved messaging in Dapps etc.
+Raven is an anonymous message broadcasting network which is decentralized, censorship resistance, privacy preserving and scalable. Anyone can send/receive, broadcast messages anonymously without revealing message metadata.
 
-Anonymity is achieved by implementing Dandelion++ protocol on top of libp2p's pub/sub module, Dandelion is a privacy preserving protocol to make message sender anonymous, it has 2 phases, the first phase is stem phase, where messages go through a psuedo-random path, the second phase is fluffing, at a random time of the stem phase, the message is diffused to its surrounding peers, so the third party observer cannot track back the node original node who send the message, because the message is relayed through an anonymous graph. Message broadcasting is implemented by libp2p floodsub. Dandelion++ is an improved version of Dandelion.
+It has two main use cases, one is decentralized messaging applications for humans, e.g., whistleblowing, anonymous group chat, anonymous survey, privacy preserved message broadcasting for decentralized applications. The other use case is for protecting blockchain against deanonymization attacks thereby DoS attacks in which network adversary links transaction/block/attestation to IP addresses and other sensitive metadata.
 
-**Dandelion++ implementation on libp2p-pubsub**: https://github.com/rairyx/go-libp2p-pubsub/tree/dandelion++
+Anonymity is achieved by implementing Dandelion++ protocol on top of libp2p's Gossipsub module, Dandelion is a privacy preserving protocol to enable message sender anonymity, it has two phases. The first phase is stem phase, where messages go through a psuedo-random path. The second phase is fluffing. At a random time during the stem phase, the message is diffused to its surrounding peers, so the third party observer cannot track back the message to the original node who send the message, because the message is relayed through an anonymous graph. Message broadcasting is implemented by libp2p's gossipsub. Dandelion++ is an improved version of Dandelion.
+
+**Dandelion++ implementation on libp2p-pubsub**: https://github.com/rairyx/go-libp2p-pubsub/
 
 
 ## Demo

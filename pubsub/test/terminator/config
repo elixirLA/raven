@@ -20,7 +20,7 @@
       parent = ""
       position = 71:55
       size = 734, 451
-      title = PubSub Demo (Go, JS, Rust)
+      title = Raven Demo (Go)
       type = Window
     [[[child1]]]
       order = 0
@@ -42,7 +42,7 @@
       type = HPaned
     [[[terminal3]]]
       profile = default
-      command = 'pushd .. ; ./raven ../util/private_key.bin.bootstrapper.Wa --bootstrapper; popd ; bash'
+      command = 'pushd .. ; IPFS_LOGGING=debug  ./raven ../util/private_key.bin.bootstrapper.Wa --bootstrapper; popd ; bash'
       order = 0
       parent = child2
       type = Terminal
@@ -56,14 +56,14 @@
       uuid = a551b167-2da7-4994-ac12-5063852055da
     [[[terminal6]]]
       profile = default
-      command = 'sleep 1 ; pushd ../js ; node index.js /ip4/127.0.0.1/tcp/5555/ipfs/QmehVYruznbyDZuHBV4vEHESpDevMoAovET6aJ9oRuEzWa; popd ; bash'
+      command = 'sleep 1 ; pushd .. ; ./raven ../util/private_key.bin.peer.w6 6001; popd ; bash'
       order = 0
       parent = child5
       type = Terminal
       uuid = 8358280f-49da-4a74-bb27-7a3c7e472fe9
     [[[terminal7]]]
       profile = default
-      command = 'sleep 1 ; pushd .. ; ./raven ../util/private_key.bin.peer.vy; popd ; bash'
+      command = 'sleep 1 ; pushd .. ; ./raven ../util/private_key.bin.peer.d9 6002;  popd ; bash'
       order = 1
       parent = child5
       type = Terminal
